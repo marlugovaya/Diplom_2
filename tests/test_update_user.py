@@ -30,8 +30,8 @@ class TestUpdateUser:
         'email, password, name',
         [
             (None, None, 'new_name_'),
-            ('new_emаil_', None, None),
-            (None, 'new_password_c', None)
+            ('new_email_', None, None),
+            (None, 'new_password_', None)
         ]
     )
     @allure.title("Проверка изменения данных неавторизованного пользователя")
