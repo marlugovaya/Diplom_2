@@ -17,7 +17,7 @@ class TestLoginUser:
             'password': password,
         }
         response = requests.post(user.url + 'api/auth/login', data=payload)
-        assert response.status_code == 200
+        assert response.status_code == 200 and response.json()['success'] == True
 
     @allure.title("Проверка авторизации под неверным логином и паролем")
     def test_login_existed_user_ok(self):
@@ -26,4 +26,4 @@ class TestLoginUser:
             'password': 'this_is_incorrect_password',
         }
         response = requests.post('https://stellarburgers.nomoreparties.site/api/auth/login', data=payload)
-        assert response.status_code == 401
+        assert response.status_code == 401 and 'email or password are incorrect' in response.text

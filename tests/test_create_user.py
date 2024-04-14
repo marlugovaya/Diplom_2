@@ -10,7 +10,7 @@ class TestCreateUser:
     def test_create_user_all_required_fields_ok(self):
         user = User()
         user_data = user.create_user_return_user_data()
-        assert user.response.status_code == 200
+        assert user.response.status_code == 200 and user.response.json()['success'] == True
         user.delete_user(user_data[3])
 
     @allure.title("Проверка создания пользователя, который уже зарегистрирован")
@@ -23,7 +23,7 @@ class TestCreateUser:
             'name': user_data[2]
         }
         response = requests.post(user.url + 'api/auth/register', data=payload)
-        assert response.status_code == 403
+        assert response.status_code == 403 and 'User already exists' in response.text
 
     @allure.title("Проверка создания пользователя без заполнения одного из обязательных полей")
     @pytest.mark.parametrize(
@@ -41,7 +41,7 @@ class TestCreateUser:
             'name': name
         }
         response = requests.post('https://stellarburgers.nomoreparties.site/api/auth/register', data=payload)
-        assert response.status_code == 403
+        assert response.status_code == 403 and 'Email, password and name are required fields' in response.text
 
 
 

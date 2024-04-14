@@ -25,5 +25,5 @@ class TestGetOrder:
             'name': user_data[2]
         }
         response = requests.get(Order.order_url, data=payload)
-        assert response.status_code == 401 and response.json()['success'] == False
+        assert response.status_code == 401 and 'You should be authorised' in response.text
 

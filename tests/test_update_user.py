@@ -24,14 +24,14 @@ class TestUpdateUser:
         }
         headers = {'authorization': user_data[3]}
         response = requests.patch(User.url + 'api/auth/user', headers=headers, data=payload)
-        assert response.status_code == 200
+        assert response.status_code == 200 and response.json()['success'] == True
 
     @pytest.mark.parametrize(
         'email, password, name',
         [
             (None, None, 'new_name_'),
-            ('new_email_', None, None),
-            (None, 'new_password_', None)
+            ('new_emаil_', None, None),
+            (None, 'new_password_c', None)
         ]
     )
     @allure.title("Проверка изменения данных неавторизованного пользователя")
@@ -42,4 +42,4 @@ class TestUpdateUser:
             'name': name
         }
         response = requests.patch(User.url + 'api/auth/user', headers=None, data=payload)
-        assert response.status_code == 401
+        assert response.status_code == 401 and 'You should be authorised' in response.text

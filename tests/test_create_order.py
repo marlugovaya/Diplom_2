@@ -27,12 +27,12 @@ class TestCreateOrder:
     @allure.title("Проверка создания заказа без ингредиентов")
     def test_create_order_without_ingredients(self):
         response = requests.post(Order.order_url, data={'ingredients': ''})
-        assert response.status_code == 400 and response.json()['success'] == False
+        assert response.status_code == 400 and 'Ingredient ids must be provided' in response.text
 
     @allure.title("Проверка создания заказа с неверным хэшем ингредиентов")
     def test_create_order_incorrect_hash(self):
         response = requests.post(Order.order_url, data={'ingredients': ['000', '42']})
-        assert response.status_code == 500
+        assert response.status_code == 500 and 'Internal Server Error' in response.text
 
 
 
